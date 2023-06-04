@@ -74,7 +74,7 @@
             messageInput.value = "";
 
             try {
-                const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
+                const response = await axios.post("https://api.openai.com/v1/chat/completions", {
                     prompt: `User: ${userMessage}\nBot:`,
                     max_tokens: 30,
                     temperature: 0.6,
