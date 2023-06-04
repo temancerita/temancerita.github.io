@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat AI Integration</title>
+    <title>Chatbot with GPT-3.5</title>
     <style>
         /* Gaya CSS untuk tampilan chat */
         .chat-container {
@@ -18,7 +18,7 @@
             margin-bottom: 10px;
         }
 
-        .ai-message {
+        .bot-message {
             background-color: #f6ffe1;
             padding: 5px;
             margin-bottom: 10px;
@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-    <h1>Chat AI Integration</h1>
+    <h1>Chatbot with GPT-3.5</h1>
 
     <div class="chat-container" id="chatContainer">
         <!-- Konten chat akan ditambahkan dinamis melalui JavaScript -->
@@ -41,36 +41,58 @@
         <button onclick="sendMessage()">Kirim</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        const chatContainer = document.getElementById("chatContainer");
+        const messageInput = document.getElementById("messageInput");
+
+        // Fungsi untuk menambahkan pesan pengguna ke tampilan chat
         function appendUserMessage(message) {
-            var chatContainer = document.getElementById("chatContainer");
-            var userMessage = document.createElement("div");
+            const userMessage = document.createElement("div");
             userMessage.className = "user-message";
             userMessage.textContent = message;
             chatContainer.appendChild(userMessage);
         }
 
-        function appendAIMessage(message) {
-            var chatContainer = document.getElementById("chatContainer");
-            var aiMessage = document.createElement("div");
-            aiMessage.className = "ai-message";
-            aiMessage.textContent = message;
-            chatContainer.appendChild(aiMessage);
+        // Fungsi untuk menambahkan pesan dari Chatbot ke tampilan chat
+        function appendBotMessage(message) {
+            const botMessage = document.createElement("div");
+            botMessage.className = "bot-message";
+            botMessage.textContent = message;
+            chatContainer.appendChild(botMessage);
         }
 
-        function sendMessage() {
-            var messageInput = document.getElementById("messageInput");
-            var userMessage = messageInput.value;
+        // Fungsi untuk mengirim pesan ke GPT-3.5 dan mendapatkan respons
+        async function sendMessage() {
+            const userMessage = messageInput.value;
+
+            if (!userMessage) {
+                return;
+            }
 
             appendUserMessage(userMessage);
             messageInput.value = "";
 
-            // Kirim permintaan ke backend atau API untuk berinteraksi dengan Chat AI dan terima respons dari AI
-            // Anda perlu menghubungkan dengan backend yang telah dibuat untuk menghubungkan dengan Chat API OpenAI
+            try {
+                const response = await axios.post("https://api.openai.com/v1/engines/davinci-codex/completions", {
+                    prompt: `User: ${userMessage}\nBot:`,
+                    max_tokens: 30,
+                    temperature: 0.6,
+                }, {
+                    headers: {
+                        "Authorization": "Bearer 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",
+                        "Content-Type": "application/json",
+                    },
+                });
 
-            // Contoh respons dari AI
-            var aiResponse = "Halo! Saya AI Chatbot. Bagaimana bisa saya membantu Anda?";
-            appendAIMessage(aiResponse);
+                if (response && response.data && response.data.choices && response.data.choices.length > 0) {
+                    const botResponse = response.data.choices[0].text.trim();
+                    appendBotMessage(botResponse);
+                }
+            } catch (error) {
+                console.error(error);
+                appendBotMessage("Maaf, terjadi kesalahan dalam memproses pesan Anda.");
+            }
         }
     </script>
 </body>
