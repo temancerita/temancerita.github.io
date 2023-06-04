@@ -74,13 +74,13 @@
             messageInput.value = "";
 
             try {
-                const response = await axios.post("https://api.openai.com/v1/chat/completions", {
+                const response = await axios.post("	https://api.openai.com/v1/chat/completions", {
                     prompt: `User: ${userMessage}\nBot:`,
                     max_tokens: 30,
                     temperature: 0.6,
                 }, {
                     headers: {
-                        "Authorization": "Bearer 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",
+                        "Authorization": "Bearer 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",
                         "Content-Type": "application/json",
                     },
                 });
