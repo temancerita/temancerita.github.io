@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Top Up Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Top Up Game</h1>
+
+        <form>
+            <label for="game">Pilih Game:</label>
+            <select id="game" name="game">
+                <option value="pubg">PUBG</option>
+                <option value="mobilelegends">Mobile Legends</option>
+                <option value="freefire">Free Fire</option>
+            </select>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Masukkan username">
+
+            <label for="amount">Jumlah Top Up:</label>
+            <input type="number" id="amount" name="amount" placeholder="Masukkan jumlah top up">
+
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+
+        <div class="result" id="resultContainer"></div>
+    </div>
+
+    <script>
+        function submitForm() {
+            const game = document.getElementById("game").value;
+            const username = document.getElementById("username").value;
+            const amount = document.getElementById("amount").value;
+
+            if (!game || !username || !amount) {
+                alert("Harap lengkapi semua field");
+                return;
+            }
+
+            const resultContainer = document.getElementById("resultContainer");
+            resultContainer.innerHTML = `<p>Top up game ${game}</p>
+                                         <p>Username: ${username}</p>
+                                         <p>Jumlah Top Up: ${amount}</p>`;
+        }
+    </script>
+</body>
+</html>
