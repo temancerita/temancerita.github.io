@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat AI Integration</title>
+    <style>
+        /* Gaya CSS untuk tampilan chat */
+        .chat-container {
+            width: 400px;
+            height: 500px;
+            border: 1px solid #ccc;
+            overflow: auto;
+            padding: 10px;
+        }
+
+        .user-message {
+            background-color: #eaf6ff;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .ai-message {
+            background-color: #f6ffe1;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat AI Integration</h1>
+
+    <div class="chat-container" id="chatContainer">
+        <!-- Konten chat akan ditambahkan dinamis melalui JavaScript -->
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="messageInput" placeholder="Ketik pesan Anda...">
+        <button onclick="sendMessage()">Kirim</button>
+    </div>
+
+    <script>
+        function appendUserMessage(message) {
+            var chatContainer = document.getElementById("chatContainer");
+            var userMessage = document.createElement("div");
+            userMessage.className = "user-message";
+            userMessage.textContent = message;
+            chatContainer.appendChild(userMessage);
+        }
+
+        function appendAIMessage(message) {
+            var chatContainer = document.getElementById("chatContainer");
+            var aiMessage = document.createElement("div");
+            aiMessage.className = "ai-message";
+            aiMessage.textContent = message;
+            chatContainer.appendChild(aiMessage);
+        }
+
+        function sendMessage() {
+            var messageInput = document.getElementById("messageInput");
+            var userMessage = messageInput.value;
+
+            appendUserMessage(userMessage);
+            messageInput.value = "";
+
+            // Kirim permintaan ke backend atau API untuk berinteraksi dengan Chat AI dan terima respons dari AI
+            // Anda perlu menghubungkan dengan backend yang telah dibuat untuk menghubungkan dengan Chat API OpenAI
+
+            // Contoh respons dari AI
+            var aiResponse = "Halo! Saya AI Chatbot. Bagaimana bisa saya membantu Anda?";
+            appendAIMessage(aiResponse);
+        }
+    </script>
+</body>
+</html>
