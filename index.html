@@ -1,99 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chatbot with GPT-3.5</title>
+    <title>Kata-kata Motivasi Random</title>
     <style>
-        /* Gaya CSS untuk tampilan chat */
-        .chat-container {
-            width: 400px;
-            height: 500px;
-            border: 1px solid #ccc;
-            overflow: auto;
-            padding: 10px;
+        body {
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        .user-message {
-            background-color: #eaf6ff;
-            padding: 5px;
-            margin-bottom: 10px;
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
 
-        .bot-message {
-            background-color: #f6ffe1;
-            padding: 5px;
-            margin-bottom: 10px;
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
         }
 
-        .input-container {
-            margin-top: 10px;
+        p {
+            font-size: 24px;
+            color: #777;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .quote-button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Chatbot with GPT-3.5</h1>
-
-    <div class="chat-container" id="chatContainer">
-        <!-- Konten chat akan ditambahkan dinamis melalui JavaScript -->
+    <div class="container">
+        <h1>Kata-kata Motivasi</h1>
+        <p id="quote"></p>
+        <button class="quote-button" onclick="getRandomQuote()">Tampilkan Kata-kata Motivasi Lainnya</button>
     </div>
 
-    <div class="input-container">
-        <input type="text" id="messageInput" placeholder="Ketik pesan Anda...">
-        <button onclick="sendMessage()">Kirim</button>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        const chatContainer = document.getElementById("chatContainer");
-        const messageInput = document.getElementById("messageInput");
+        const quotes = [
+            "Kesuksesan dimulai dengan keputusan untuk mencoba.",
+            "Kesempatan biasanya terlihat seperti kesulitan.",
+            "Keberhasilan adalah hasil dari ketekunan yang tak kenal lelah.",
+            "Jangan menyerah, kegagalan adalah langkah menuju kesuksesan.",
+            "Rahasia kesuksesan adalah fokus pada tujuan, bukan hambatan.",
+            "Setiap kegagalan membawa Anda lebih dekat menuju kesuksesan.",
+            "Jadikan kegagalan sebagai batu loncatan untuk meraih kesuksesan.",
+            "Percayalah pada diri sendiri dan taklukkan segala hal yang menghalangi kesuksesan Anda.",
+            "Kesuksesan adalah perjalanan, bukan tujuan akhir.",
+            "Tantangan adalah peluang untuk tumbuh dan berkembang.",
+            "Keberhasilan dimulai dari langkah pertama yang diambil.",
+            "Beranilah bermimpi besar, karena mimpi adalah awal dari segala pencapaian.",
+            "Yang paling penting adalah tetap berusaha dan tidak menyerah."
+        ];
 
-        // Fungsi untuk menambahkan pesan pengguna ke tampilan chat
-        function appendUserMessage(message) {
-            const userMessage = document.createElement("div");
-            userMessage.className = "user-message";
-            userMessage.textContent = message;
-            chatContainer.appendChild(userMessage);
+        function getRandomQuote() {
+            const quoteElement = document.getElementById("quote");
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            quoteElement.textContent = quotes[randomIndex];
         }
 
-        // Fungsi untuk menambahkan pesan dari Chatbot ke tampilan chat
-        function appendBotMessage(message) {
-            const botMessage = document.createElement("div");
-            botMessage.className = "bot-message";
-            botMessage.textContent = message;
-            chatContainer.appendChild(botMessage);
-        }
+        // Tampilkan quote pertama saat halaman dimuat
+        getRandomQuote();
 
-        // Fungsi untuk mengirim pesan ke GPT-3.5 dan mendapatkan respons
-        async function sendMessage() {
-            const userMessage = messageInput.value;
-
-            if (!userMessage) {
-                return;
-            }
-
-            appendUserMessage(userMessage);
-            messageInput.value = "";
-
-            try {
-                const response = await axios.post("	https://api.openai.com/v1/chat/completions", {
-                    prompt: `User: ${userMessage}\nBot:`,
-                    max_tokens: 30,
-                    temperature: 0.6,
-                }, {
-                    headers: {
-                        "Authorization": "Bearer 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",
-                        "Content-Type": "application/json",
-                    },
-                });
-
-                if (response && response.data && response.data.choices && response.data.choices.length > 0) {
-                    const botResponse = response.data.choices[0].text.trim();
-                    appendBotMessage(botResponse);
-                }
-            } catch (error) {
-                console.error(error);
-                appendBotMessage("Maaf, terjadi kesalahan dalam memproses pesan Anda.");
-            }
-        }
+        // Ganti quote setiap 10 menit
+        setInterval(getRandomQuote, 600000);
     </script>
 </body>
 </html>
